@@ -1,0 +1,38 @@
+@model BKFitness.ViewModels.Location.NewLocationModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="row ">
+    <div class="container">
+
+        <div class="col-md-8 col-md-offset-2">
+            <div class="content ">
+                <div id="tab">
+                    <form asp-action="AddLocation" method="post" id="create">
+                        <h2>Add Location</h2>
+                        <hr />
+                        <div class="form-group">
+                            <label asp-for="LocationName"></label>
+                            <input asp-for="LocationName" class="form-control" />
+                            <span asp-validation-for="LocationName" class="text-danger"></span>
+                        </div>
+                         <div class="form-group">
+                            <label asp-for="LocationAddress"></label>
+                            <input asp-for="LocationAddress" class="form-control" />
+                            <span asp-validation-for="LocationAddress" class="text-danger"></span>
+                        </div>
+                         <div class="form-group">
+                            <label asp-for="LocationMap"></label>
+                            <input asp-for="LocationMap" class="form-control" />
+                            <span asp-validation-for="LocationMap" class="text-danger"></span>
+                        </div>
+                    
+                    
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

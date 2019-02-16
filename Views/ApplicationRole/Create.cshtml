@@ -1,0 +1,51 @@
+@model BKFitness.ViewModels.Account.Role.NewApplicationRoleModel
+
+@{
+ViewData["Title"] = "Create";
+}
+<div class="row ">
+    <div class="container">
+
+        <div class="col-md-8 col-md-offset-2">
+            <div class="content ">
+                <div id="tab">
+
+                    <h3>Add Membership type</h3>
+                    <hr />
+                   
+               <form asp-action="AddRole" method="post" id="create">
+                   
+                       <div class="form-group">
+                            <label asp-for="MembershipName">Membership Type</label>
+                            <input asp-for="MembershipName" class="form-control" />
+                            <span asp-validation-for="MembershipName" class="text-danger"></span>
+                        </div>
+                  
+
+                     <div class="form-group">
+                            <label asp-for="MembershipDescription">Description</label>
+                          <textarea asp-for="MembershipDescription" class="form-control" rows="10"></textarea>
+                            <span asp-validation-for="MembershipDescription" class="text-danger"></span>
+                        </div>
+
+
+                           <div class="form-group">
+                            <label asp-for="MembershipImageUrl">Image</label>
+                            <input asp-for="MembershipImageUrl" class="form-control" />
+                            <span asp-validation-for="MembershipImageUrl" class="text-danger"></span>
+                        </div>
+                        
+
+                           <div class="form-group">
+                            <label asp-for="MembershipPrice">Price</label>
+                            <input asp-for="MembershipPrice" class="form-control" />
+                            <span asp-validation-for="MembershipPrice" class="text-danger"></span>
+                        </div>
+
+                   <button type="submit" class="btn btn-default">Save</button>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

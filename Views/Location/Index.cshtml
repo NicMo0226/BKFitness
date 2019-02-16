@@ -1,0 +1,34 @@
+@model BKFitness.ViewModels.Location.LocationIndexModel
+
+@{
+    ViewBag.Title = "Location Index";
+}
+
+<h3>@ViewBag.Title</h3>
+<div id="locationIndex">
+    <div id="table">
+        <table class="table table-condensed" id="Table">
+            <thead>
+        <thead>
+            <tr>
+                <th>Location Link</th>
+                <th>Location Name</th>
+                <th>Location Address</th>
+                <th>Location Map</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var location in Model.LocationListing)
+            {
+                <tr>
+                    <td><a asp-controller="Location" asp-action="Detail" asp-route-id="@location.Id" id="link">(Location)</a></td>
+                    <td>@location.LocationName</td>
+                    <td>@location.LocationAddress</td>
+                    <td>@location.LocationMap</td>
+               </tr>
+           }
+        </tbody>
+    </table>
+</div>
+</div>

@@ -1,0 +1,31 @@
+@model BKFitness.ViewModels.Location.LocationDetailModel
+
+@{
+
+    ViewBag.Title = @Model.LocationName + " Location";
+}
+
+
+
+<div class="container">
+    <div class="page-header clearfix detailHeading">
+        <h2 class="text-muted">Information</h2>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <div class="row">
+
+        <div class="col-md-4 ">
+            <div>
+                <h2>@Model.LocationName</h2>
+                <div class="class day times">
+                    <p id="MemberType">Name: @Model.LocationAddress</p>
+                    <p id="Since">Map: @Model.LocationMap</p>
+
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</div>

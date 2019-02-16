@@ -1,0 +1,38 @@
+@model BKFitness.ViewModels.Session.SessionIndexModel
+
+@{
+    ViewData["Title"] = "Class Listing";
+} 
+
+<h3>Classes</h3>
+    <div id="table">
+        <table class="table table-condensed" id="Table">
+            <thead>
+                <tr>
+                  
+                    <th>Image</th>
+                    <th>Class</th>
+                    <th>Price</th>
+                    <th>Member Price</th>
+		            
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var session in Model.SessionListing)
+                {
+                    <tr class="Row">
+                        <td class="">
+                            <a asp-controller="Session" asp-action="Detail" asp-route-id="@session.Id">
+                                <img src="@session.Image" width="150" class="imageCell" />
+                            </a>
+                        </td>
+                        <td class="">@session.SessionName</td>
+                        <td class="">@session.NonMemberPrice</td>
+                        <td class="">@session.MemberPrice</td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

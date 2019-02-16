@@ -1,0 +1,35 @@
+@model BKFitness.ViewModels.Time.TimeIndexModel
+
+@{
+    ViewBag.Title = "Dates";
+}
+
+<h3>@ViewBag.Title</h3>
+<div id="daytime">
+ <div id="table">
+        <table class="table table-condensed" id="Table">
+            <thead>
+        <thead>
+            <tr>
+            
+                <th>Class</th>
+                <th>Location/th>
+                <th>Day</th>
+                <th>Date & Start Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+                         <tr>
+             @foreach (var time in Model.TimeListing)
+                               {          
+                 
+                    <td>@time.Start.ToShortTimeString()</td>
+                    <td>@time.End.ToShortTimeString()</td>
+                               }
+                </tr>
+         
+        </tbody>
+    </table>
+</div>
+</div>

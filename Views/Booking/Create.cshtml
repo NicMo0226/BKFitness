@@ -1,0 +1,31 @@
+@model BKFitness.ViewModels.Booking.NewBookingModel
+
+@{
+ViewData["Title"] = "Create";
+}
+<div class="row ">
+    <div class="container">
+
+        <div class="col-md-8 col-md-offset-2">
+            <div class="content ">
+                <div id="tab">
+
+                    <h2>Add Day and time</h2>
+                    <hr />
+                    <form asp-controller="Booking" asp-action="AddBooking" method="post">
+
+  <select asp-for="SessionId" asp-items="Model.SessionList"></select>
+  <select asp-for="LocationId" asp-items="Model.LocationList"></select>
+  <select asp-for="DayDateId" asp-items="Model.DayDateList"></select>
+  <select asp-for="TimeId" asp-items="Model.TimeList"></select>
+
+
+
+
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

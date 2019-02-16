@@ -1,0 +1,33 @@
+@model BKFitness.ViewModels.DayDate.NewDayDateModel
+
+@{
+ViewData["Title"] = "Create";
+}
+<div class="row ">
+    <div class="container">
+
+        <div class="col-md-8 col-md-offset-2">
+            <div class="content ">
+                <div id="tab">
+
+                    <h3>Add day and date</h3>
+                    <hr />
+                    <form asp-controller="DayDate" asp-action="AddDayDate" method="post">
+                        <div class="form-group">
+                            <label asp-for="DayOfWeek"></label>
+                            <input asp-for="DayOfWeek" class="form-control" />
+                            <span asp-validation-for="DayOfWeek" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ClassDate"></label>
+                            <input asp-for="ClassDate" class="form-control" />
+                            <span asp-validation-for="ClassDate" class="text-danger"></span>
+                        </div>
+                       
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

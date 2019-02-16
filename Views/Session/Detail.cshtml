@@ -1,0 +1,39 @@
+@model BKFitness.ViewModels.Session.SessionDetailModel
+
+@{
+    ViewBag.Title = @Model.Name;
+}
+
+<div class="container">
+    <div class="page-header clearfix detailHeading">
+        <h2 class="text-muted">View Class</h2>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-4">
+            <div>
+                <img class="detailImage" src="@Model.Image" />
+            </div>
+        </div>
+        <div class="col-md-4 ">
+            <p id="itemTitle">@Model.Description</p>
+            <p id="itemClass">@Model.NonMemberPrice</p>
+            <p id="itemType">@Model.MemberPrice</p>
+            <p id="itemLocation">@Model.LocationName</p>
+            <p id="itemLocation">@Model.LocationAddress</p>
+ <div class="LocationHours">
+
+                    <ul>
+                        @foreach (var day in Model.HoursOpen)
+                        {
+
+                            <li>@day</li>
+                        }
+                    </ul>
+                </div>
+           
+        </div>
+    </div>
+</div>

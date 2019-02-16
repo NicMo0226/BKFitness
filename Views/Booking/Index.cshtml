@@ -1,0 +1,36 @@
+@model BKFitness.ViewModels.Booking.BookingIndexModel
+@{
+    ViewBag.Title = "Listing";
+}
+
+<h3>@ViewBag.Title</h3>
+<div id="listingIndex">
+   <div id="table">
+        <table class="table table-condensed" id="Table">
+          <thead>
+            <tr>
+                <th>Class</th>
+                <th>Location </th>
+                <th>Day </th>
+                <th>Date</th>
+                <th>Start </th>
+                <th>End </th>
+          
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model.BookingList)
+            {
+                <tr>
+                   <td>@booking.SessionName</td>
+                    <td>@booking.LocationName</td>
+                    <td>@booking.Day</td>
+                    <td>@booking.ClassDate</td>
+                    <td>@booking.Start</td>
+                    <td>@booking.End</td>
+                    <
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

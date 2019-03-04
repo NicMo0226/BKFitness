@@ -15,6 +15,7 @@ FROM build AS publish
 RUN dotnet publish "BKFitness.csproj" -c Release -o /app
 
 FROM base AS final
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "BKFitness.dll"]

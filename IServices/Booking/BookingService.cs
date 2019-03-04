@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using BKFitness.Data;
 using BKFitness.Models;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace BKFitness.IServices
@@ -33,8 +31,8 @@ namespace BKFitness.IServices
 
         public Booking GetById (int id)
         {
-            return _context.Bookings
-                .FirstOrDefault (l => l.Id == id);
+            return _context.Bookings.Where (s => s.Id == id)
+                              .FirstOrDefault ();
         }
 
     }

@@ -1,8 +1,70 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="container containerHome ">
+            <div id="impress" class="impress-not-supported">
+
+
+                <!-- The first slide retains its default position. We could omit the data attributes -->
+                <div id="intro" class="step" data-x="0" data-y="0" data-scale="1.8">
+                    <h4>Introducing Zumba Fitness</h4>
+                    <img src="images/zumfit.jpg" height="400" width="400" alt="Zumba Fitness" />
+                </div>
+
+                <!-- We are offsetting the second slide, rotating it and making it 1.8 times larger -->
+              <div id="simplicity" class="step" data-x="1800" data-y="1200" data-scale="3.8" data-rotate="190">
+                    <h4>Get your glowsticks ready </br> &nbsp;&nbsp;&nbsp;for a party workout in the dark!</h4>
+                    <img src="images/club.jpg" height=" 400" width="400" alt="Clubbercise" />
+                </div>
+
+                <!-- Same for the rest.. -->
+             <div id="connect" class="step" data-x="-500" data-y="1600" data-scale="2.4" data-rotate="270">
+                    <h4>Take it a little slower with Zumba Gold </h4>
+                    <img src="images/zumgol.jpg" width="400" height="400" alt="Zumba Gold" />
+                </div>
+
+               <div id="upload" class="step" data-x="-200" data-y="1600" data-rotate="180" data-scale="3">
+                    <h4>Back2Back - Zumba Fitness and Clubbercise</h4>
+                    <img src="images/mash.jpg" height="400" width="400" alt="MashUp" />
+                </div>
+
+               <div id="music" class="step" data-x="-1200" data-y="1000" data-scale="0.8" data-rotate="270">
+                    <h4>If you love to shimmy and shake then Sosa is for you!</h4>
+                    <img src="images/sos.jpg" width="400" width="400" alt="Sosa Fitness" />
+                </div>
+
+                <div id="pound" class="step" data-x="-100" data-y="1200" data-rotate="180" data-scale="3.1">
+                    <h4>Ready for a Pounding?!</h4>
+                    <img src="images/pound.jpg" height="400" width="400" alt="Pound Fitness" />
+                </div>
+
+              
+            </div>
+             <a id="arrowLeft" class="arrow">  <i class="material-icons">navigate_before</i></a>
+        <a id="arrowRight" class="arrow"><i class="material-icons">navigate_next</i></a>
+     
 </div>
+
+@section Scripts{
+   <script type="text/javascript" src="~/js/impress.js" asp-append-version="true"></script>
+   <script type="text/javascript">
+
+$(function(){
+
+    var imp = impress();
+
+    $('#arrowLeft').click(function(e){
+        imp.prev();
+        e.preventDefault();
+    });
+
+    $('#arrowRight').click(function(e){
+        imp.next();
+        e.preventDefault();
+    });
+
+});
+  </script>
+}

@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BKFitness.Models
 {
@@ -20,10 +21,9 @@ namespace BKFitness.Models
 
         public DateTime Joined { get; set; }
 
-      
+        
+        public string MembershipId { get; set; }
+        
 
-        [ForeignKey ("MembershipId")]
-        public virtual Membership Membership { get; set; }
-        public int MembershipId { get; set; }
     }
 }

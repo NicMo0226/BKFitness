@@ -1,0 +1,38 @@
+@model BKFitness.ViewModels.Membership.MembershipIndexModel
+
+
+
+<h3>Memberships</h3>
+
+    <table class="table ">
+        <thead>
+        
+                <tr>
+                    <th>Membership Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Price</th>
+               
+
+                </tr>
+            </thead>
+        <tbody>
+         
+                @foreach (var item in @Model.MembershipList)
+                {
+   <tr>
+       <td>
+                            <a asp-controller="Membership" asp-action="Detail" asp-route-id="@item.Id">
+                                <img src="@item.MembershipImageUrl" width="150" class="imageCell" />
+                            </a>
+                        </td>
+                <td> @item.MembershipName</td>
+                <td>@item.MembershipDescription</td>
+         
+                <td>@item.MembershipPrice</td>
+             </tr>
+                }
+           
+            </tbody>
+</table>
+

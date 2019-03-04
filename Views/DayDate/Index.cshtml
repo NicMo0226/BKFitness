@@ -1,33 +1,26 @@
 @model BKFitness.ViewModels.DayDate.DayDateIndexModel
 
 @{
-    ViewBag.Title = "Dates";
+ViewBag.Title = "Dates";
 }
 
 <h3>@ViewBag.Title</h3>
-<div id="daytime">
- <div id="table">
-        <table class="table table-condensed" id="Table">
-            <thead>
+<div id="table">
+    <table class="table table-condensed">
         <thead>
             <tr>
-                     
                 <th>Day</th>
                 <th>Date</th>
-             
             </tr>
         </thead>
         <tbody>
-                         <tr>
-                               @foreach (var daydate in Model.DayDateListing)
-                               {
-                    <td>@daydate.DayOfWeek</td>
-                    <td>@daydate.ClassDate</td>
-                  
-                               }
-                </tr>
-         
+            <tr>
+                @foreach (var daydate in Model.DayDateListing)
+                {
+                <td>@daydate.DayOfWeek</td>
+                <td>@daydate.ClassDate</td>
+                }
+            </tr>
         </tbody>
     </table>
-</div>
 </div>

@@ -22,15 +22,14 @@ namespace BKFitness.Models
     [Required]
     [Display (Name = "Price")]
     [Column (TypeName = "decimal(18,2)")]
-    public decimal NoMembershipPrice { get; set; }
+    public decimal ClassPriceNoMember { get; set; }
 
     [Display (Name = "Member Price")]
     [Column (TypeName = "decimal(18,2)")]
-    public decimal MembershipPrice { get; set; }
+    public decimal ClassPriceMember { get; set; }
 
-   // [NotMapped]
-   // public virtual IEnumerable<Location> Locations { get; set; }
+    // [NotMapped]
+    // public virtual IEnumerable<Location> Locations { get; set; }
 
-   
-     }
+  }
 }

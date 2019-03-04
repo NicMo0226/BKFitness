@@ -1,54 +1,58 @@
+using System.Collections.Generic;
+using System.Linq;
 using BKFitness.IServices;
 using BKFitness.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BKFitness.Controllers
 {
     public class OrderController : Controller
     {
+        private IData _dataService;
         private IOrder _orderService;
-        private ICart _cartService;
 
-        public OrderController (IOrder orderService, ICart cartService)
+        public OrderController (IData dataService,
+            IOrder orderService)
         {
+            _dataService = dataService;
             _orderService = orderService;
-            _cartService = cartService;
         }
 
-        [Authorize]
-        public IActionResult Checkout ()
+        public IActionResult Index () => View (_orderService.Orders);
+
+        public IActionResult EditOrder (long id)
         {
-            return View ();
+            var products = _dataService.Products;
+            Order order = id == 0 ? new Order () : _orderService.GetOrder (id);
+            IDictionary<long, OrderLine> linesMap = order.Lines?.ToDictionary (l => l.ProductId)
+                ?? new Dictionary<long, OrderLine> ();
+            ViewBag.Lines = products.Select (p => linesMap.ContainsKey (p.Id)
+                ? linesMap[p.Id]
+                : new OrderLine { Product = p, ProductId = p.Id, Quantity = 0 });
+            return View (order);
         }
 
         [HttpPost]
-        [Authorize]
-        public IActionResult Checkout (Order order)
+        public IActionResult AddOrUpdateOrder (Order order)
         {
-            var items = _cartService.GetShoppingCartItems ();
-            _cartService.GetShoppingCartItems = items;
-
-            if (_cartService.CartItems.Count == 0)
+            order.Lines = order.Lines
+                .Where (l => l.Id > 0 || (l.Id == 0 && l.Quantity > 0)).ToArray ();
+            if (order.Id == 0)
             {
-                ModelState.AddModelError ("", "Your cart is empty, add some pies first");
+                _orderService.AddOrder (order);
             }
-
-            if (ModelState.IsValid)
+            else
             {
-                _orderService.CreateOrder (order);
-                _cartService.ClearCart ();
-                return RedirectToAction ("CheckoutComplete");
+                _orderService.UpdateOrder (order);
             }
-            return View (order);
-
+            return RedirectToAction (nameof (Index));
         }
 
-        public IActionResult CheckoutComplete ()
+        [HttpPost]
+        public IActionResult DeleteOrder (Order order)
         {
-            ViewBag.CheckoutCompleteMessage = HttpContext.User.Identity.Name
-                + ", thanks for your order. You'll soon enjoy our delicious pies!";
-            return View ();
+            _orderService.DeleteOrder (order);
+            return RedirectToAction (nameof (Index));
         }
     }
 }

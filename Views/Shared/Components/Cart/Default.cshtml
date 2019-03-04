@@ -1,0 +1,28 @@
+@using Microsoft.Extensions.Options
+@inject IOptions<StripeSettings> Stripe
+@model Cart
+
+@if (Model?.Selections?.Count() > 0) {
+    <div>
+        @Model.Selections.Count() items,
+    $@(Model.Selections.Sum(l => l.Quantity
+            * l.Product.RetailPrice).ToString("f2"))
+</div>
+    if (ViewContext.RouteData.Values["controller"] as string != "Cart") {
+      <form action="/Home/Charge" method="POST">
+  <article>
+    <label>Amount: £5.00</label>
+  </article>
+  <script src="//checkout.stripe.com/v2/checkout.js"
+          class="stripe-button"
+          data-key="@Stripe.Value.PublishableKey"
+          data-locale="auto"
+          data-description="Sample Charge"
+          data-amount="500">
+  </script>
+</form>
+    }
+}
+
+
+

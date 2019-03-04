@@ -1,6 +1,8 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using BKFitness.Data;
 using BKFitness.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BKFitness.IServices
 {
@@ -8,36 +10,33 @@ namespace BKFitness.IServices
     {
         private ApplicationDbContext _context;
 
-        private readonly ShoppingCart _shoppingCart;
-
-        public OrderService (ApplicationDbContext context, ShoppingCart cart)
+        public OrderService (ApplicationDbContext context)
         {
             _context = context;
-            _shoppingCart = cart;
         }
-        public void CreateOrder (Order order)
+
+        public IEnumerable<Order> Orders => _context.Orders
+            .Include (o => o.Lines).ThenInclude (l => l.Product);
+
+        public Order GetOrder (long key) => _context.Orders
+            .Include (o => o.Lines).First (o => o.Id == key);
+
+        public void AddOrder (Order order)
         {
-            order.OrderPlaced = DateTime.Now;
-
             _context.Orders.Add (order);
+            _context.SaveChanges ();
+        }
 
-            var shoppingCartItems = _shoppingCart.ShoppingCartItems;
+        public void UpdateOrder (Order order)
+        {
+            _context.Orders.Update (order);
+            _context.SaveChanges ();
+        }
 
-            foreach (var shoppingCartItem in shoppingCartItems)
-            {
-                var orderDetail = new OrderDetail ()
-                {
-                    Amount = shoppingCartItem.Amount,
-                   BookingId = shoppingCartItem.Booking.Id,
-                    OrderId = order.Id,
-                    Price = shoppingCartItem.Booking.BookingCost
-                };
-
-                _context.OrderDetails.Add (orderDetail);
-            }
-
+        public void DeleteOrder (Order order)
+        {
+            _context.Orders.Remove (order);
             _context.SaveChanges ();
         }
     }
-}
 }

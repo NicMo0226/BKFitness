@@ -1,11 +1,14 @@
-namespace BKFitness.ViewModels.Session 
+using Microsoft.AspNetCore.Http;
+
+namespace BKFitness.ViewModels.Session
 {
-    public class AddSessionModel 
+    public class AddSessionModel
     {
         public string Name { get; set; }
-        public string Image { get; set; }
+        public IFormFile Image { get; set; }
+        public string SessionImageUrl { get; set; }
         public string Description { get; set; }
-        public decimal NonMemberPrice { get; set; }
-        public decimal MemberPrice { get; set; }
+        public decimal ClassPriceNoMember { get; set; }
+        public decimal ClassPriceMember { get; set; }
     }
 }

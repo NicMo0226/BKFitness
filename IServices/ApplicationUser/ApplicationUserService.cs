@@ -1,8 +1,8 @@
-﻿using BKFitness.Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BKFitness.Data;
 using BKFitness.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BKFitness.IServices
 {
@@ -11,31 +11,27 @@ namespace BKFitness.IServices
 
         private ApplicationDbContext _context;
 
-        public ApplicationUserService(ApplicationDbContext context)
+        public ApplicationUserService (ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public void Add(ApplicationUser newUser)
+        public void Add (ApplicationUser newUser)
         {
-            _context.Add(newUser);
-            _context.SaveChanges();
+            _context.Add (newUser);
+            _context.SaveChanges ();
         }
 
-        public ApplicationUser GetById(string id)
+        public ApplicationUser GetById (string id)
         {
 
             return _context.ApplicationUsers
-                  .Include(m => m.Membership)
-                  //  .Include(m => m.Checkouts)
-                  .FirstOrDefault(m => m.Id == id);
+                .FirstOrDefault (m => m.Id == id);
         }
 
-        public IEnumerable<ApplicationUser> GetAll()
+        public IEnumerable<ApplicationUser> GetAll ()
         {
-            return _context.ApplicationUsers
-                .Include(m => m.Membership);
-            //  .Include(m => m.Checkouts);
+            return _context.ApplicationUsers;
 
         }
 
@@ -63,4 +59,3 @@ namespace BKFitness.IServices
 
     }
 }
-

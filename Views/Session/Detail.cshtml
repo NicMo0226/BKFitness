@@ -4,35 +4,19 @@
     ViewBag.Title = @Model.Name;
 }
 
-<div class="container">
-    <div class="page-header clearfix detailHeading">
-        <h2 class="text-muted">View Class</h2>
-    </div>
-</div>
 
-<div class="jumbotron">
-    <div class="row">
-        <div class="col-md-4">
-            <div>
-                <img class="detailImage" src="@Model.Image" />
-            </div>
-        </div>
-        <div class="col-md-4 ">
-            <p id="itemTitle">@Model.Description</p>
-            <p id="itemClass">@Model.NonMemberPrice</p>
-            <p id="itemType">@Model.MemberPrice</p>
-            <p id="itemLocation">@Model.LocationName</p>
-            <p id="itemLocation">@Model.LocationAddress</p>
- <div class="LocationHours">
-
-                    <ul>
-                        @foreach (var day in Model.HoursOpen)
-                        {
-
-                            <li>@day</li>
-                        }
-                    </ul>
-                </div>
+    <div class="container detail">
+<div class="row ">
+        <div class="col-md-4 col-md-offset-1">
+                <img class="detailImage" src="@Model.SessionImageUrl" />
+         </div>
+      <div class="col-md-4 col-md-offset-1">
+            <h3>@Model.Name</h3> <hr>
+            <p id="item">@Model.Description</p><hr>
+            <p id="itemClass">@Model.ClassPriceNoMember</p><hr>
+            <p id="itemType">@Model.ClassPriceMember</p><hr>
+   
+ 
            
         </div>
     </div>

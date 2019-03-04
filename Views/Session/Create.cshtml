@@ -1,7 +1,7 @@
 @model BKFitness.ViewModels.Session.AddSessionModel
 
 @{
-    ViewData["Title"] = "Create";
+ViewData["Title"] = "Create";
 }
 <div class="row ">
     <div class="container">
@@ -9,7 +9,8 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="content ">
                 <div id="tab">
-                    <form asp-action="AddSession" method="post" id="create">
+                    <form asp-action="AddSession" method="post" id="create"  enctype="multipart/form-data"> 
+               <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <h2>Add Class</h2>
                         <hr />
                         <div class="form-group">
@@ -17,27 +18,29 @@
                             <input asp-for="Name" class="form-control" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                             <label asp-for="Description"></label>
-                            <input asp-for="Description" class="form-control" />
+                            <textarea asp-for="Description"  class="form-control" rows="6"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
-                         <div class="form-group">
-                            <label asp-for="Image"></label>
-                            <input asp-for="Image" class="form-control" />
-                            <span asp-validation-for="Image" class="text-danger"></span>
+                        <div id="upload">
+                                <label>Upload Class Image</label>
+                                <br />
+                                <label class="btn btn-default btn-file">
+                                    Browse <input asp-for="Image" typeof="file" style="display: none" />
+                                </label>
+                            </div>
+                        <div class="form-group">
+                            <label asp-for="ClassPriceNoMember"></label>
+                            <input asp-for="ClassPriceNoMember" class="form-control" />
+                            <span asp-validation-for="ClassPriceNoMember" class="text-danger"></span>
                         </div>
-                     <div class="form-group">
-                            <label asp-for="NonMemberPrice"></label>
-                            <input asp-for="NonMemberPrice" class="form-control" />
-                            <span asp-validation-for="NonMemberPrice" class="text-danger"></span>
-                        </div>  
-                         <div class="form-group">
-                            <label asp-for="MemberPrice">Price</label>
-                            <input asp-for="MemberPrice" class="form-control" />
-                            <span asp-validation-for="MemberPrice" class="text-danger"></span>
+                        <div class="form-group">
+                            <label asp-for="ClassPriceMember">Price</label>
+                            <input asp-for="ClassPriceMember" class="form-control" />
+                            <span asp-validation-for="ClassPriceMember" class="text-danger"></span>
                         </div>
-                    
+
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
                 </div>

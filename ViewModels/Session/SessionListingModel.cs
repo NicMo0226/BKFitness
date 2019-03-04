@@ -4,18 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BKFitness.ViewModels.Session 
+namespace BKFitness.ViewModels.Session
 {
-    public class SessionListingModel 
+    public class SessionListingModel
     {
         public int Id { get; set; }
 
         public string SessionName { get; set; }
 
-        public string Image { get; set; }
+        public string SessionImageUrl { get; set; }
 
-        public decimal NonMemberPrice { get; set; }
-        public decimal MemberPrice { get; set; }
+        public decimal ClassPriceNoMember { get; set; }
+        public decimal ClassPriceMember { get; set; }
 
     }
 }

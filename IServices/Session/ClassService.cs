@@ -24,20 +24,15 @@ namespace BKFitness.IServices
         }
         public Session GetById (int id)
         {
-            var session = _context.Classes.Where (c => c.Id == id)
+          return  _context.Classes.Where (c => c.Id == id)
                 .FirstOrDefault ();
-
-            return session;
         }
 
         //Class navigation properties, return all
         public IEnumerable<Session> GetAll ()
         {
             return _context.Classes;
-            //    .Include (session => session.Locations);
-            //.ThenInclude (c => c.HoursOpen);
-
         }
-     
+
     }
 }

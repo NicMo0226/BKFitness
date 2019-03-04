@@ -1,36 +1,51 @@
 @model BKFitness.ViewModels.Booking.BookingIndexModel
 @{
-    ViewBag.Title = "Listing";
+ViewBag.Title = "Listing";
 }
 
 <h3>@ViewBag.Title</h3>
-<div id="listingIndex">
-   <div id="table">
-        <table class="table table-condensed" id="Table">
-          <thead>
-            <tr>
-                <th>Class</th>
-                <th>Location </th>
-                <th>Day </th>
-                <th>Date</th>
-                <th>Start </th>
-                <th>End </th>
-          
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var booking in Model.BookingList)
-            {
+<div id="table">
+    <table class="table table-condensed">
+        <thead>
+        
                 <tr>
-                   <td>@booking.SessionName</td>
+                    <th>Logo</th>
+                    <th>Class</th>
+                    <th>Location </th>
+                    <th>Day </th>
+                    <th>Date</th>
+                    <th>Start </th>
+                    <th>End </th>
+              
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model.BookingList)
+                {
+                <tr>
+                    <td>
+                     <a asp-controller="Booking" asp-action="Index" asp-route-id="@booking.Id">
+                                <img src="@booking.SessionImageUrl" width="50" class="imageCell" />
+                            </a></td>
+                    <td>@booking.SessionName</td>
                     <td>@booking.LocationName</td>
                     <td>@booking.Day</td>
                     <td>@booking.ClassDate</td>
                     <td>@booking.Start</td>
                     <td>@booking.End</td>
-                    <
+
+
+                    
+                    <td>@booking.ClassPriceMember</td>
+                    <td>@booking.ClassPriceNoMember</td>
+                   
+                 
+                
+                     <td><a asp-controller="Cart" asp-action="AddtoShoppingCart" asp-route-id="@booking.Id" id="link"><i class="material-icons">add_shopping_cart</i></a></td>
+                       
                 </tr>
             }
+          
         </tbody>
     </table>
 </div>

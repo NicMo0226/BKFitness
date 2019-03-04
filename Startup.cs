@@ -1,20 +1,25 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-
 using BKFitness.Data;
 using BKFitness.IServices;
 using BKFitness.Models;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json;
+using Stripe;
+using OrderService = BKFitness.IServices.OrderService;
+
 
 namespace BKFitness
 {
@@ -42,64 +47,58 @@ namespace BKFitness
             services.AddDbContext<ApplicationDbContext> (options =>
                 options.UseNpgsql (connectionString));
 
-            services.AddIdentity<ApplicationUser, ApplicationRole> ()
+            services.AddIdentity<ApplicationUser, IdentityRole> ()
                 .AddDefaultUI (UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
             //Password Strength Setting
-            services.Configure<IdentityOptions> (options =>
-            {
-                // Password settings
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredUniqueChars = 6;
 
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes (30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings
-                options.User.RequireUniqueEmail = true;
-            });
+            services.Configure<StripeSettings> (Configuration.GetSection ("Stripe"));
             services.AddScoped<IApplicationUser, ApplicationUserService> ();
-            services.AddScoped<IApplicationRole, ApplicationRoleService> ();
-            services.AddScoped<IClass ,ClassService> ();
+            services.AddScoped<IClass, ClassService> ();
             services.AddScoped<ILocation, LocationService> ();
             services.AddScoped<IDayDate, DayDateService> ();
             services.AddScoped<IParq, ParqService> ();
-            services.AddScoped<IMembership, MembershipService> ();
             services.AddScoped<ITime, TimeService> ();
             services.AddScoped<IBooking, BookingService> ();
+            services.AddScoped<IOrder, OrderService> ();
+            services.AddScoped<ICategory, CategoryService> ();
+            services.AddScoped<IData, DataService> ();
+            services.AddScoped<IMembership, MembershipService> ();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor> ();
             services.AddSingleton (Configuration);
+            services.AddDistributedSqlServerCache (options =>
+            {
+                options.ConnectionString = connectionString;
+                options.SchemaName = "dbo";
+                options.TableName = "SessionData";
+            });
+            services.AddSession (options =>
+            {
+                options.Cookie.Name = "SportsStore.Session";
+                options.IdleTimeout = System.TimeSpan.FromHours (48);
+                options.Cookie.HttpOnly = false;
+            });
+            services.AddSingleton<IFileProvider> (
+                new PhysicalFileProvider (
+                    Path.Combine (Directory.GetCurrentDirectory (), "wwwroot")));
+
+            //   services.AddDirectoryBrowser ();
             services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_2)
-                .AddRazorPagesOptions (options =>
-                {
-                    options.AllowAreas = true;
-                    options.Conventions.AuthorizeAreaFolder ("Identity", "/Account/Manage");
-                    options.Conventions.AuthorizeAreaPage ("Identity", "/Account/Logout");
-                });
+                .AddJsonOptions (opts =>
+                    opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize)
+            .AddRazorPagesOptions (options =>
+            {
+                options.AllowAreas = true;
+                options.Conventions.AuthorizeAreaFolder ("Identity", "/Account/Manage");
+                options.Conventions.AuthorizeAreaPage ("Identity", "/Account/Logout");
+            });
             services.ConfigureApplicationCookie (options =>
             {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes (30);
-                options.LoginPath = "/Account/Login"; // If the LoginPath is not set here,
-                // ASP.NET Core will default to /Account/Login
-                options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here,
-                // ASP.NET Core will default to /Account/Logout
-                options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is
-                // not set here, ASP.NET Core 
-                // will default to 
-                // /Account/AccessDenied
-                options.SlidingExpiration = true;
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
-            // services.AddAuthorization (options =>
-            // {
-            //     options.AddPolicy ("RequireMembership", policy => policy.RequireRole ("ZumbaMember, ClubberciseMember"));
-            // });
+
             services.AddAuthentication ()
                 .AddGoogle (options =>
                 {
@@ -107,31 +106,10 @@ namespace BKFitness
                     options.ClientSecret = "wdfPY6t8H8cecgjlxud__4Gh";
                 });
         }
-        // This method gets called by the runtime.Use this method to configure the HTTP request pipeline.
-        // private async Task CreateUserRoles (IServiceProvider serviceProvider)
-        // {
-        //     var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>> ();
-        //     var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>> ();
-        //     IdentityResult roleResult;
-        //     //Adding Admin Role
-        //     var roleCheck = await RoleManager.RoleExistsAsync ("Admin");
 
-        //     if (!roleCheck)
-        //     {
-        //         //create the roles and seed them to the database
-        //         roleResult = await RoleManager.CreateAsync (new IdentityRole ("Admin"));
-        //     }
-        //     //Assign Admin role to the main User here we have given our newly registered 
-        //     //login id for Admin management
-        //     ApplicationUser user = await UserManager.FindByEmailAsync ("n@n.n");
-
-        //     var User = new ApplicationUser ();
-        //     await UserManager.AddToRoleAsync (user, "Admin");
-        // }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure (IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
         {
+            StripeConfiguration.SetApiKey (Configuration.GetSection ("Stripe")["SecretKey"]);
             if (env.IsDevelopment ())
             {
                 app.UseDeveloperExceptionPage ();
@@ -146,18 +124,21 @@ namespace BKFitness
 
             app.UseHttpsRedirection ();
             app.UseStaticFiles ();
+            app.UseSession ();
+
             app.UseCookiePolicy ();
 
             app.UseAuthentication ();
+            app.UseMvcWithDefaultRoute ();
 
-            app.UseMvc (routes =>
-            {
-                routes.MapRoute (
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            // app.UseMvc (routes =>
+            // {
+            //     routes.MapRoute (
+            //         name: "default",
+            //         template: "{controller=Home}/{action=Index}/{id?}");
+            // });
 
-          //  CreateUserRoles (services).Wait ();
+            //  CreateUserRoles (services).Wait ();
         }
     }
 }

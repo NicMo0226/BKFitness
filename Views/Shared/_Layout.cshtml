@@ -16,68 +16,82 @@
                 integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
         </environment>
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css" />
+        <link href="https://fonts.googleapis.com/css?family=Thasadith:700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
 
     <body>
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BKFitness</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <partial name="_LoginPartial" />
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                    aria-expanded="false">Create<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li role="separator" class="divider"></li>
-                                  
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <div class="container">
-        
-        <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
-                <div class="row">
-                <div class="col-md-9">
-                @RenderBody()
-                </div>
-                <div class="col-md-3">
-  <ul class="menu">
-                   
-                    <li><a asp-area="" asp-controller="Session" asp-action="Create">Create Class</a></li>
-                    <li><a asp-area="" asp-controller="Location" asp-action="Create">Create Location</a></li>
-                    <li><a asp-area="" asp-controller="DayDate" asp-action="Create">Create Day and Date</a></li>
-                    <li><a asp-area="" asp-controller="Time" asp-action="Create">Create Time</a></li>
-                    <li><a asp-area="" asp-controller="Booking" asp-action="Create">Create Booking</a></li>
-                    <li><a asp-area="" asp-controller="Membership" asp-action="Create">Create Membership</a></li>
-</ul>
-                </div>
-                </div>
-            </main>
-        </div>
+            <div class="wrap">
+                <nav>
+                    <ul class="menu">
+                        <li><a><img src="/images/bklogo2.png" width="150px"></a></li>
 
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index"> <i class="material-icons">home</i></a></li>
+                        <li><a href="#"><i class="material-icons">settings</i></a>
+                            <ul>
+                                <li><a asp-area="" asp-controller="Session" asp-action="Index">Class List</a></li>
+                                <li><a asp-area="" asp-controller="Session" asp-action="Create">Create Class</a></li>
+                                <li><a asp-area="" asp-controller="Location" asp-action="Index">LocationList</a></li>
+                                <li><a asp-area="" asp-controller="Location" asp-action="Create">Create Location</a></li>
+                                <li><a asp-area="" asp-controller="DayDate" asp-action="Index">Day and Date List</a></li>
+                                <li><a asp-area="" asp-controller="DayDate" asp-action="Create">Create Day and Date</a></li>
+                                <li><a asp-area="" asp-controller="Time" asp-action="Index">Time List</a></li>
+                                <li><a asp-area="" asp-controller="Time" asp-action="Create">Create Time</a></li>
+                                <li><a asp-area="" asp-controller="Booking" asp-action="Index">Booking List</a></li>
+                                <li><a asp-area="" asp-controller="Booking" asp-action="Create">Create Booking</a></li>
+                                <li><a asp-area="" asp-controller="Membership" asp-action="Index">Membership List</a></li>
+                                <li><a asp-area="" asp-controller="Membership" asp-action="Create">Create Membership</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"> <img src="images/danceicon.jpeg" width="35px"></a>
+                            <ul>
+                                <li><a href="BKFitness/sessions/1">Zumba Fitness</a></li>
+                                <li><a href="BKFitness/sessions/2">Zumba Gold</a></li>
+                                <li><a href="BKFitness/sessions/3">Clubbercise</a></li>
+                                <li><a href="BKFitness/sessions/4">MashUp</a></li>
+                                <li><a href="BKFitness/sessions/5">Pound Fitness</a></li>
+                                <li><a href="BKFitness/sessions/6">Sosa Fitness </a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="#"><i class="material-icons">calendar_today</i></a>
+                            <ul>
+                                <li><a href="BKFitness/TimeTable">Timetable</a></li>
+                                <li><a href="BKFitness/Events">Events</a></li>
+                                <li><a href="BKFitness/Transformations">Transformations</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="BKFitness/About.cshtml"><i class="material-icons">info</i></a></li>
+
+                        <li><a href="#"><i class="material-icons">email</i></a>
+                            <ul>
+                                <li><a href="BKFitness/Contact">Contact</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                   
+                    <partial name="_LoginPartial"></partial>
+                    <div class="clearfix"></div>
+                </nav>
+            </div>
+        </header>
+     
+            <partial name="_CookieConsentPartial" />
+       
+                    @RenderBody()
+            
         <footer class="border-top footer text-muted">
             <div class="container">
                 &copy; 2019 - BKFitness - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>
-
         <environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
@@ -92,6 +106,7 @@
             </script>
         </environment>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/impress.js" asp-append-version="true"></script>
 
         @RenderSection("Scripts", required: false)
     </body>

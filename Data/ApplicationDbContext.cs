@@ -41,7 +41,7 @@ namespace BKFitness.Data
 
             protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseNpgsql ("Server=localhost;Database=bkf_db;User Id=nic;Password=10202602Mo;");
+                optionsBuilder.UseNpgsql ("Server=localhost;Database=bkf_db;User Id=nic;Password=*****;");
             }
         }
 }
